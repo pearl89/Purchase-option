@@ -1,0 +1,401 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Options</title>
+  <style>
+  body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  }
+ 
+
+  .container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+  }
+ 
+
+  h2 {
+  color: #4CAF50;
+  margin-bottom: 20px;
+  }
+ 
+
+  .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+  }
+ 
+
+  label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  }
+ 
+
+  select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  }
+ 
+
+  button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  }
+ 
+
+  button:hover {
+  background-color: #367C39;
+  }
+ 
+
+  #details {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: left;
+  background-color: #f9f9f9;
+  display: none;
+  }
+ 
+
+  #details h3 {
+  color: #4CAF50;
+  margin-bottom: 10px;
+  text-align: center;
+  }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+  <h2>Select an Option</h2>
+ 
+
+  <div class="form-group">
+  <label for="option">Choose an Option:</label>
+  <select id="option" name="option">
+  <option value="">-- Select --</option>
+  <option value="premium">Premium Accounts</option>
+  <option value="roblox">Roblox</option>
+  <option value="ml">ML (Coming Soon)</option>
+  </select>
+  </div>
+ 
+
+  <button onclick="showDetails()">Continue</button>
+ 
+
+  <div id="details">
+  </div>
+ 
+
+  <script>
+  function showDetails() {
+  const selectedOption = document.getElementById('option').value;
+  const detailsDiv = document.getElementById('details');
+  detailsDiv.innerHTML = ''; // Clear previous content
+  detailsDiv.style.display = 'none';
+ 
+
+  if (selectedOption === 'roblox') {
+  detailsDiv.innerHTML = `
+  <h3>Roblox Purchase</h3>
+  <div class="form-group">
+  <label for="accountName">Account Name:</label>
+  <input type="text" id="accountName" name="accountName" placeholder="Enter Account Name">
+  </div>
+  <div class="form-group">
+  <label for="ownerName">Owner Name:</label>
+  <input type="text" id="ownerName" name="ownerName" placeholder="Enter Owner Name">
+  </div>
+  <div class="form-group">
+  <label for="robuxAmount">Select Robux Amount:</label>
+  <select id="robuxAmount" name="robuxAmount">
+  <option value="100">100 Robux - ₱40.00</option>
+  <option value="100">100 Robux - ₱45.00</option>
+  <option value="200">200 Robux - ₱65.00</option>
+  <option value="200">200 Robux - ₱80.00</option>
+  <option value="300">300 Robux - ₱90.00</option>
+  <option value="300">300 Robux - ₱115.00</option>
+  <option value="400">400 Robux - ₱115.00</option>
+  <option value="400">400 Robux - ₱150.00</option>
+  <option value="500">500 Robux - ₱140.00</option>
+  <option value="500">500 Robux - ₱185.00</option>
+  <option value="600">600 Robux - ₱165.00</option>
+  <option value="600">600 Robux - ₱220.00</option>
+  <option value="700">700 Robux - ₱190.00</option>
+  <option value="700">700 Robux - ₱255.00</option>
+  <option value="800">800 Robux - ₱215.00</option>
+  <option value="800">800 Robux - ₱290.00</option>
+  <option value="900">900 Robux - ₱240.00</option>
+  <option value="900">900 Robux - ₱325.00</option>
+  <option value="1000">1000 Robux - ₱265.00</option>
+  <option value="1000">1000 Robux - ₱365.00</option>
+  </select>
+  </div>
+  <div class="form-group">
+  <label for="quantity">Quantity:</label>
+  <input type="number" id="quantity" name="quantity" value="1" min="1">
+  </div>
+  <div class="options">
+  <label>
+  <input type="radio" id="taxIncluded" name="tax" value="included" checked>
+  Tax Included
+  </label>
+  <label>
+  <input type="radio" id="taxExcluded" name="tax" value="excluded">
+  Tax Excluded
+  </label>
+  </div>
+  <button onclick="generateRobloxReceipt()">Generate Receipt</button>
+  <div id="robloxReceipt" style="display: none;">
+  <h3>Purchase Receipt</h3>
+  <p><strong>Owner:</strong> <span id="receiptOwnerName"></span></p>
+  <p><strong>Account Name:</strong> <span id="receiptAccountName"></span></p>
+  <p><strong>Robux Amount:</strong> <span id="receiptRobuxAmount"></span></p>
+  <p><strong>Quantity:</strong> <span id="receiptQuantity"></span></p>
+  <p><strong>Tax:</strong> <span id="receiptTax"></span></p>
+  <p><strong>Total:</strong> <span id="receiptTotal"></span></p>
+  <p>Thank you for your purchase!</p>
+  </div>
+  `;
+  detailsDiv.style.display = 'block';
+  } else if (selectedOption === 'premium') {
+  detailsDiv.innerHTML = `
+  <h3>Premium Accounts</h3>
+  <div class="form-group">
+  <label for="accountType">Select Account Type:</label>
+  <select id="accountType" name="accountType">
+  <option value="disney_shared">Disney - ₱53 (Shared)</option>
+  <option value="disney_solo">Disney - ₱93 (Solo)</option>
+  <option value="netflix_shared">Netflix - ₱53 (Shared)</option>
+  <option value="netflix_solo">Netflix - ₱93 (Solo)</option>
+  <option value="vivamax">Vivamax/One - ₱23 (Shared)</option>
+  <option value="wetv">WeTV - ₱28 (Shared)</option>
+  <option value="iqiyi">Iqiyi - ₱33 (Shared)</option>
+  <option value="prime_shared">Prime - ₱16 (Shared)</option>
+  <option value="prime_solo">Prime - ₱23 (Solo)</option>
+  <option value="crunchyroll_shared">Crunchyroll - ₱23 (Shared)</option>
+  <option value="crunchyroll_solo">Crunchyroll - ₱33 (Solo)</option>
+  <option value="wowpresents">Wowpresents - ₱33 (Shared)</option>
+  <option value="bilibili">Bilibili - ₱33 (Shared)</option>
+  <option value="nba">NBA - ₱33 (Shared)</option>
+  <option value="iwantfc">Iwantfc - ₱28 (Shared)</option>
+  <option value="viu">Viu - ₱8 (Shared)</option>
+  <option value="dramabox">Dramabox - ₱103 (Shared)</option>
+  <option value="ytinv">YT Inv - ₱16 (Shared)</option>
+  <option value="quillbot1">Quillbot - ₱20 (1 Month)</option>
+  <option value="quillbot2">Quillbot - ₱30 (2 Month)</option>
+  <option value="grammarly">Grammarly - ₱20 (1 Month)</option>
+  <option value="duolingo1">Duolingo - ₱15 (1 Month)</option>
+  <option value="duolingo2">Duolingo - ₱25 (2 Month)</option>
+  <option value="capcut1">Capcut - ₱15 (7 days)</option>
+  <option value="capcut2">Capcut - ₱30 (1 Month)</option>
+  <option value="remini web1">Remini Web - ₱10 (7 days)</option>
+  <option value="remini web2">Remini Web - ₱15 (1 Month)</option>
+  <option value="picsart1">Picsart - ₱10 (7 days)</option>
+  <option value="picsart2">Picsart - ₱15 (1 Month)</option>
+  <option value="ibispaint1">Ibispaint - ₱15 (7 days)</option>
+  <option value="ibispaint2">Ibispaint - ₱20 (1 Month)</option>
+  <option value="evernote1">Evernote - ₱15 (7 days)</option>
+  <option value="evernote2">Evernote - ₱25 (1 Month)</option>
+  <option value="scribd">Scribd - ₱20 (1 Month)</option
+  <option value="quizlet">Quizlet - ₱10 (1 Month)</option>
+  <option value="wps">Wps - ₱15 (1 Month)</option>
+  <option value="ms365">Ms365 - ₱18 (1 Month)</option>
+  </select>
+  </div>
+  <button onclick="generatePremiumReceipt()">Generate Receipt</button>
+  <div id="premiumReceipt" style="display: none;">
+  <h3>Purchase Receipt</h3>
+  <p><strong>Account:</strong> <span id="receiptAccount"></span></p>
+  <p><strong>Total:</strong> <span id="receiptPremiumTotal"></span></p>
+  <p>Thank you for your purchase!</p>
+  </div>
+  `;
+  detailsDiv.style.display = 'block';
+  } else if (selectedOption === 'ml') {
+  detailsDiv.innerHTML = `<p>ML Options Coming Soon!</p>`;
+  detailsDiv.style.display = 'block';
+  }
+  }
+ 
+
+  function generateRobloxReceipt() {
+  const accountName = document.getElementById('accountName').value;
+  const ownerName = document.getElementById('ownerName').value;
+  const robuxAmount = document.getElementById('robuxAmount');
+  const selectedRobux = robuxAmount.options[robuxAmount.selectedIndex].text;
+  const quantity = parseInt(document.getElementById('quantity').value);
+  const taxIncluded = document.getElementById('taxIncluded').checked;
+  const taxStatus = taxIncluded ? 'Included' : 'Excluded';
+ 
+
+  let price = parseFloat(robuxAmount.options[robuxAmount.selectedIndex].text.split('₱')[1]);
+  let subtotal = price * quantity;
+  let total = taxIncluded ? subtotal : subtotal * 1.07;
+ 
+
+  document.getElementById('receiptOwnerName').innerText = ownerName;
+  document.getElementById('receiptAccountName').innerText = accountName;
+  document.getElementById('receiptRobuxAmount').innerText = selectedRobux;
+  document.getElementById('receiptQuantity').innerText = quantity;
+  document.getElementById('receiptTax').innerText = taxStatus;
+  document.getElementById('receiptTotal').innerText = '₱' + total.toFixed(2);
+ 
+
+  document.getElementById('robloxReceipt').style.display = 'block';
+  }
+ 
+
+  function generatePremiumReceipt() {
+  const accountType = document.getElementById('accountType');
+  const selectedAccount = accountType.options[accountType.selectedIndex].text;
+  let price = 0;
+ 
+
+  switch (accountType.value) {
+  case 'disney_shared':
+  price = 53;
+  break;
+  case 'disney_solo':
+  price = 93;
+  break;
+  case 'netflix_shared':
+  price = 53;
+  break;
+  case 'netflix_solo':
+  price = 93;
+  break;
+  case 'vivamax':
+  price = 23;
+  break;
+  case 'wetv':
+  price = 28;
+  break;
+  case 'iqiyi':
+  price = 33;
+  break;
+  case 'prime_shared':
+  price = 16;
+  break;
+  case 'prime_solo':
+  price = 23;
+  break;
+  case 'crunchyroll_shared':
+  price = 23;
+  break;
+  case 'crunchyroll_solo':
+  price = 33;
+  break;
+  case 'wowpresents':
+  price = 33;
+  break;
+  case 'bilibili':
+  price = 33;
+  break;
+  case 'nba':
+  price = 33;
+  break;
+  case 'iwantfc':
+  price = 28;
+  break;
+  case 'viu':
+  price = 8;
+  break;
+  case 'dramabox':
+  price = 103;
+  break;
+  case 'ytinv':
+  price = 16;
+  break;
+  case 'quillbot1':
+  price = 20;
+  break;
+  case 'quillbot2':
+  price = 30;
+  break;
+  case 'grammarly':
+  price = 20;
+  break;
+  case 'duolingo1':
+  price = 15;
+  break;
+  case 'duolingo2':
+  price = 25;
+  break;
+  case 'capcut1':
+  price = 15;
+  case 'capcut2':
+  price = 30;
+  break;
+  case 'remini web1':
+  price = 10;
+  break;
+  case 'remini web2':
+  price = 15;
+  break;
+  case 'picsart1':
+  price = 10;
+  break;
+  case 'picsart2':
+  price = 20;
+  break;
+  case 'ibispaint1':
+  price = 15;
+  break;
+  case 'ibispaint2':
+  price = 20;
+  break;
+  case 'evernote1':
+  price = 15;
+  break;
+  case 'evernote2':
+  price = 25;
+  break;
+  case 'scribd':
+  price = 20;
+  break;
+  case 'quizlet':
+  price = 10;
+  break;
+  case 'wps':
+  price = 15;
+  break;
+  case 'ms365':
+  price = 18;
+  break;
+  }
+ 
+
+  document.getElementById('receiptAccount').innerText = selectedAccount;
+  document.getElementById('receiptPremiumTotal').innerText = '₱' + price.toFixed(2);
+ 
+
+  document.getElementById('premiumReceipt').style.display = 'block';
+  }
+  </script>
+ </body>
+ </html>
